@@ -142,6 +142,7 @@ Popcorn.player( "youtube", {
         });
       };
 
+height *
       media.pause = function() {
 
         if ( options.destroyed ) {
@@ -219,16 +220,17 @@ Popcorn.player( "youtube", {
 
       autoPlay = ( /autoplay=1/.test( query ) );
 
-      // setting youtube player's height and width, min 640 x 390,
-      // anything smaller, and the player reports incorrect states.
-      width = media.offsetWidth && media.offsetWidth >= 640 ? "" + media.offsetWidth : "640";
-      relativeHeight = +( width/16 * 9 );
-      if( 
-        media.offsetHeight && media.style.height >= 390 ) { height = media.offsetHeight; 
-      } else if ( relativeHeight && relativeHeight >= 390 ) { 
-        height = relativeHeight; 
-      } else { 
-        height = 390; 
+      // setting youtube player's height and width, min 640 x 360,
+      // anything smaller, and the player reports incorrect states
+       var RATIO = 9 / 16,
+          MIN_WIDTH = 640,
+          MIN_HEIGHT = 360;
+
+      width = media.offsetWidth >= MIN_WIDTH ? media.offsetWidth : MIN_WIDTH;
+      height = media.offsetHeight >= MIN_HEIGHT ? media.offsetHeight : width * RATIO;
+
+      if ( media.offsetWidth <= MIN_WIDTH && media.offsetHeight >= MIN_HEIGHT ) {
+        width = height / RATIO;
       }
 
       options.youtubeObject = new YT.Player( container.id, {
