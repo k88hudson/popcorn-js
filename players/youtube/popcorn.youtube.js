@@ -142,7 +142,7 @@ Popcorn.player( "youtube", {
         });
       };
 
-height *
+
       media.pause = function() {
 
         if ( options.destroyed ) {
@@ -234,8 +234,8 @@ height *
       }
 
       options.youtubeObject = new YT.Player( container.id, {
-        height: height,
-        width: width,
+        height: "" + height,
+        width: "" + width,
         videoId: src,
         events: {
           "onReady": function(){
